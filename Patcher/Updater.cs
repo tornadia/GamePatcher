@@ -27,10 +27,33 @@ namespace Patcher
             public string md5Old;
         }
 
+        public static string GetCurrentVersionString(string filename)
+        {
+            return File.ReadAllText(filename, System.Text.Encoding.UTF8); // reading MINOR.MAJOR.BUILD
+        }
+
+        public static int ConvertVersionStringToInt(string val)
+        {
+            int ver = 0; // version to be returned in int
+            string[] segment = val.Split('.');
+            int patch = int.Parse(segment[2]); ;
+            int minor = int.Parse(segment[1]) * 1000;
+            int major = int.Parse(segment[0]) * 100000;
+            return major + minor + patch;
+        }
+
+        public static string ConvertVersionIntToString(decimal val)
+        {
+            decimal patch = val % 1000;
+            decimal minor = val > 1000 ? Math.Floor(val / 1000) % 100 : 0;
+            decimal major = val > 100000 ? Math.Floor(val / 100000) : 0;
+
+            return major + "." + minor + "." + patch;
+        }
 
         public static int GetCurrentVersion(string filename)
         {
-            return int.Parse(File.ReadAllText(filename, System.Text.Encoding.UTF8));
+            return ConvertVersionStringToInt(GetCurrentVersionString(filename));
         }
 
         public static string HumanReadableSizeFormat(long bytes)

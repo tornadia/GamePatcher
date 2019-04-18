@@ -51,6 +51,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NumericUpDownEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="FileHelper.cs" />
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>

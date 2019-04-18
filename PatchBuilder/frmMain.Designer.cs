@@ -32,8 +32,8 @@
             this.btnMakePatch = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown1 = new PatchBuilder.NumericUpDownEx();
+            this.numericUpDown2 = new PatchBuilder.NumericUpDownEx();
             this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
@@ -75,7 +75,7 @@
             // 
             this.numericUpDown1.Location = new System.Drawing.Point(43, 17);
             this.numericUpDown1.Maximum = new decimal(new int[] {
-            99998,
+            9999999,
             0,
             0,
             0});
@@ -98,7 +98,7 @@
             // 
             this.numericUpDown2.Location = new System.Drawing.Point(125, 17);
             this.numericUpDown2.Maximum = new decimal(new int[] {
-            99999,
+            10000000,
             0,
             0,
             0});
@@ -157,8 +157,8 @@
         private System.Windows.Forms.Button btnMakePatch;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
+        private PatchBuilder.NumericUpDownEx numericUpDown1;
+        private PatchBuilder.NumericUpDownEx numericUpDown2;
         private System.Windows.Forms.Label label3;
     }
 }

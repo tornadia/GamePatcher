@@ -52,18 +52,19 @@ namespace PatchBuilder
 
         private void btnMakePatch_Click(object sender, EventArgs e)
         {
-            string folder1 = Path.Combine(sourceFolder, numericUpDown1.Value.ToString());
-            string folder2 = Path.Combine(sourceFolder, numericUpDown2.Value.ToString());
+//          string folder1 = Path.Combine(sourceFolder, numericUpDown1.Value.ToString());
+            string folder1 = Path.Combine(sourceFolder, numericUpDown1._Text);
+            string folder2 = Path.Combine(sourceFolder, numericUpDown2._Text);
 
             if (!Directory.Exists(folder1))
             {
-                MessageBox.Show(string.Format("Version {0} folder does not exists. Path: {1}", numericUpDown1.Value, folder1), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format("Version {0} folder does not exists. Path: {1}", numericUpDown1._Text, folder1), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             if (!Directory.Exists(folder2))
             {
-                MessageBox.Show(string.Format("Version {0} folder does not exists. Path: {1}", numericUpDown1.Value, folder2), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format("Version {0} folder does not exists. Path: {1}", numericUpDown1._Text, folder2), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -98,12 +99,12 @@ namespace PatchBuilder
         void MakePatch(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker worker = sender as BackgroundWorker;
-            string folder1 = Path.Combine(sourceFolder, numericUpDown1.Value.ToString());
-            string folder2 = Path.Combine(sourceFolder, numericUpDown2.Value.ToString());
+            string folder1 = Path.Combine(sourceFolder, numericUpDown1._Text);
+            string folder2 = Path.Combine(sourceFolder, numericUpDown2._Text);
 
             try
             {
-                if (numericUpDown1.Value != int.Parse(File.ReadAllText(Path.Combine(Path.Combine(folder1, "patcher"), "version.txt")).Trim()))
+                if (numericUpDown1._Text != File.ReadAllText(Path.Combine(Path.Combine(folder1, "patcher"), "version.txt")))
                     throw new Exception("invalid value");
             }
             catch
@@ -117,7 +118,7 @@ namespace PatchBuilder
 
             try
             {
-                if (numericUpDown2.Value != int.Parse(File.ReadAllText(Path.Combine(Path.Combine(folder2, "patcher"), "version.txt")).Trim()))
+                if (numericUpDown2._Text != File.ReadAllText(Path.Combine(Path.Combine(folder2, "patcher"), "version.txt")))
                     throw new Exception("invalid value");
             }
             catch
@@ -138,7 +139,7 @@ namespace PatchBuilder
 
             statusForm.UpdateText("Creating patch...");
 
-            using (FileStream fsOut = File.Create(Path.Combine(patchFolder, string.Format("{0}_{1}.patch", numericUpDown1.Value.ToString(), numericUpDown2.Value.ToString()))))
+            using (FileStream fsOut = File.Create(Path.Combine(patchFolder, string.Format("{0}_{1}.patch", numericUpDown1._Text, numericUpDown2._Text))))
             {
                 using (ZipOutputStream zipStream = new ZipOutputStream(fsOut))
                 {

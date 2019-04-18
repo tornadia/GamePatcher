@@ -148,7 +148,9 @@ namespace Patcher
         {
             patchDownloadEvent = new AutoResetEvent(false);
 
-            lblVersion.Text = "v" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            //lblVersion.Text = "v" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            lblVersion.Text = "v" + Updater.GetCurrentVersionString(Path.Combine(patcherDirectory, "version.txt"));
+
 
             try
             {
@@ -176,6 +178,7 @@ namespace Patcher
             lblStatus.Text = Program.resourceManager.GetString("initialization");
             
             webBrowser.Navigate(configuration.NewsUrl);
+            webBrowser.ScriptErrorsSuppressed = true;
 
             btnPlay.MouseEnter += new EventHandler(ButtonHover);
             btnPlay.MouseLeave += new EventHandler(ButtonNormal);
@@ -269,7 +272,7 @@ namespace Patcher
             try
             {
                 WebClient webClientVer = new WebClient();
-                lastVersion = int.Parse(webClientVer.DownloadString(new Uri(configuration.VersionUrl)));
+                lastVersion = Updater.ConvertVersionStringToInt(webClientVer.DownloadString(new Uri(configuration.VersionUrl)));
             }
             catch (UriFormatException)
             {
@@ -305,7 +308,8 @@ namespace Patcher
                 webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(webClient_DownloadProgressChanged);
                 webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(webClient_DownloadFileCompleted);
                 string tempPatchFilename = Path.GetTempFileName();
-                string patch_filename = string.Format("{0}_{1}.patch", i, i + 1);
+                string currVers = Updater.ConvertVersionIntToString(i), nextVers = Updater.ConvertVersionIntToString(i+1);
+                string patch_filename = string.Format("{0}_{1}.patch", currVers, nextVers);
                 string patch_uri = configuration.PatchesDirectory + patch_filename;
 
                 patchDownloadEvent.Reset();
